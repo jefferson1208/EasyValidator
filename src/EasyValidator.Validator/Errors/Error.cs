@@ -1,6 +1,6 @@
 ﻿namespace EasyValidator.Validator.Errors
 {
-    public sealed class Error
+    public class Error
     {
         public Error(string message)
         {

@@ -1,12 +1,12 @@
-﻿using EasyValidator.Tests.Fixture;
-using EasyValidator.Validator.Errors;
+﻿using EasyValidator.Tests.Entity;
+using EasyValidator.Tests.Fixture;
 using EasyValidator.Validator.Validations;
 using Xunit;
 
 namespace EasyValidator.Tests
 {
     [Collection(nameof(TelefoneCollection))]
-    public class TelefoneTests : Notify
+    public class TelefoneTests
     {
         private readonly TelefoneTestsFixture _telefoneTestsFixture;
         public TelefoneTests(TelefoneTestsFixture telefoneTestsFixture)
@@ -19,18 +19,19 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenTelefoneIsValid()
         {
             //Arrange
-            var phones = _telefoneTestsFixture.GenerateListPhoneValid(100);
+            var samples = _telefoneTestsFixture.GenerateListPhoneValid(100);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            phones.ForEach(phone =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsPhone(phone, "Telefone é obrigatório"));
+                contract.IsPhone(sample.Phone, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de Telefone. Inválidos")]
@@ -39,18 +40,19 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var quantity = 100;
-            var phones = _telefoneTestsFixture.GenerateListPhoneInvalid(quantity);
+            var samples = _telefoneTestsFixture.GenerateListPhoneInvalid(quantity);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            phones.ForEach(phone =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsPhone(phone, "Telefone é obrigatório"));
+                contract.IsPhone(sample.Phone, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == quantity);
+            Assert.True(contract.Invalid);
+            Assert.Equal(quantity, contract.Errors.Count);
 
         }
     }

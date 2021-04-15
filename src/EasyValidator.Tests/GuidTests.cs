@@ -1,12 +1,12 @@
-﻿using EasyValidator.Tests.Fixture;
-using EasyValidator.Validator.Errors;
+﻿using EasyValidator.Tests.Entity;
+using EasyValidator.Tests.Fixture;
 using EasyValidator.Validator.Validations;
 using Xunit;
 
 namespace EasyValidator.Tests
 {
     [Collection(nameof(GuidCollection))]
-    public class GuidTests : Notify
+    public class GuidTests
     {
         private readonly GuidTestsFixture _guidTestsFixture;
         public GuidTests(GuidTestsFixture guidTestsFixture)
@@ -18,18 +18,19 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenGuidIsValid()
         {
             //Arrange
-            var guids = _guidTestsFixture.GenerateListGuidValid(100);
+            var samples = _guidTestsFixture.GenerateListGuidValid(100);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            guids.ForEach(guid =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                       .Requires()
-                                       .IsGuidNotEmpty(guid, "Campo obrigatório"));
+                contract.IsGuidNotEmpty(sample.Guid, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de Guid. Inválidos")]
@@ -38,18 +39,19 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var quantity = 100;
-            var guids = _guidTestsFixture.GenerateListGuidInvalid(quantity);
+            var samples = _guidTestsFixture.GenerateListGuidInvalid(quantity);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            guids.ForEach(guid =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                       .Requires()
-                                       .IsGuidNotEmpty(guid, "Campo obrigatório"));
+                contract.IsGuidNotEmpty(sample.Guid, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == quantity);
+            Assert.True(contract.Invalid);
+            Assert.Equal(quantity, contract.Errors.Count);
 
         }
     }

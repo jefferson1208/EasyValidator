@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using Bogus.Extensions.Brazil;
+using EasyValidator.Tests.Entity;
 using EasyValidator.Tests.Enums;
 using System;
 using System.Collections.Generic;
@@ -14,67 +15,67 @@ namespace EasyValidator.Tests.Fixture
     }
     public class DocumentTestsFixture : IDisposable
     {
-        public List<string> GenerateDocumentsValid(int quantity, EDocumentType type)
+        public List<Sample> GenerateDocumentsValid(int quantity, EDocumentType type)
         {
 
-            var documents = new List<string>();
+            var samples = new List<Sample>();
 
             for (int i = 0; i < quantity; i++)
             {
                 var faker = new Faker("pt_BR");
 
                 if (type == EDocumentType.Cpf)
-                    documents.Add(faker.Person.Cpf());
+                    samples.Add(new Sample { Cpf = faker.Person.Cpf() });
                 else
-                    documents.Add(faker.Company.Cnpj());
+                    samples.Add(new Sample { Cnpj = faker.Company.Cnpj() });
             }
 
-            return documents;
+            return samples;
         }
 
-        public List<string> GenerateDocumentsInvalid(int quantity, EDocumentType type)
+        public List<Sample> GenerateDocumentsInvalid(int quantity, EDocumentType type)
         {
 
-            var documents = new List<string>();
+            var samples = new List<Sample>();
 
             for (int i = 0; i < quantity; i++)
             {
                 var faker = new Faker("pt_BR");
 
                 if (type == EDocumentType.Cpf)
-                    documents.Add(faker.Company.Cnpj());
+                    samples.Add(new Sample { Cpf = faker.Company.Cnpj() });
                 else
-                    documents.Add(faker.Person.Cpf());
+                    samples.Add(new Sample { Cnpj = faker.Person.Cpf() });
             }
 
-            return documents;
+            return samples;
         }
 
-        public List<string> GenerateCnhValid()
+        public List<Sample> GenerateCnhValid()
         {
-            var documents = new List<string>();
+            var documents = new List<Sample>();
 
-            documents.Add("35426956790");
-            documents.Add("51390445011");
-            documents.Add("18748600560");
-            documents.Add("07866185842");
-            documents.Add("77720603237");
-            documents.Add("96495452515");
-            documents.Add("77024223179");
-            documents.Add("13292353122");
-            documents.Add("32860601403");
-            documents.Add("905687414-74");
-            documents.Add("54123117117");
-            documents.Add("15515545913");
-            documents.Add("01270275045");
-            documents.Add("71766977592");
-            documents.Add("23069252843");
-            documents.Add("43892490583");
-            documents.Add("45956176381");
-            documents.Add("45297212300");
-            documents.Add("71190464642");
-            documents.Add("78835101452");
-            documents.Add("403712097-56");
+            documents.Add(new Sample { Cnh = "35426956790" });
+            documents.Add(new Sample { Cnh = "51390445011" });
+            documents.Add(new Sample { Cnh = "18748600560" });
+            documents.Add(new Sample { Cnh = "07866185842" });
+            documents.Add(new Sample { Cnh = "77720603237" });
+            documents.Add(new Sample { Cnh = "96495452515" });
+            documents.Add(new Sample { Cnh = "77024223179" });
+            documents.Add(new Sample { Cnh = "13292353122" });
+            documents.Add(new Sample { Cnh = "32860601403" });
+            documents.Add(new Sample { Cnh = "905687414-74" });
+            documents.Add(new Sample { Cnh = "54123117117" });
+            documents.Add(new Sample { Cnh = "15515545913" });
+            documents.Add(new Sample { Cnh = "01270275045" });
+            documents.Add(new Sample { Cnh = "71766977592" });
+            documents.Add(new Sample { Cnh = "23069252843" });
+            documents.Add(new Sample { Cnh = "43892490583" });
+            documents.Add(new Sample { Cnh = "45956176381" });
+            documents.Add(new Sample { Cnh = "45297212300" });
+            documents.Add(new Sample { Cnh = "71190464642" });
+            documents.Add(new Sample { Cnh = "78835101452" });
+            documents.Add(new Sample { Cnh = "403712097-56" });
 
             return documents;
         }

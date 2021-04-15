@@ -1,12 +1,12 @@
+using EasyValidator.Tests.Entity;
 using EasyValidator.Tests.Fixture;
-using EasyValidator.Validator.Errors;
 using EasyValidator.Validator.Validations;
 using Xunit;
 
 namespace EasyValidator.Tests
 {
     [Collection(nameof(CartaoCollection))]
-    public class CartaoTests : Notify
+    public class CartaoTests
     {
         private readonly CartaoTestsFixture _cartaoTestsFixture;
 
@@ -20,20 +20,20 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenCreditCardIsValid()
         {
             //Arrange
-            var creditCards = _cartaoTestsFixture.GenereateCreditCardsValid();
+            var samples = _cartaoTestsFixture.GenereateCreditCardsValid();
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-
-            creditCards.ForEach(card =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsCreditCard(card, "Error"));
+                contract.IsCreditCard(sample.CreditCard, "Sua mensagem caso ocorra erro aqui");
             });
-            
+
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.Equal(0, contract.Errors.Count);
+            Assert.True(contract.Valid);
         }
 
         [Fact(DisplayName = "Validação de Cartão de Crédito. Inválidos")]
@@ -42,20 +42,19 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var quantity = 100;
-            var creditCards = _cartaoTestsFixture.GenereateCreditCardsInvalid(quantity);
+            var samples = _cartaoTestsFixture.GenereateCreditCardsInvalid(quantity);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-
-            creditCards.ForEach(card =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsCreditCard(card, "Error"));
+                contract.IsCreditCard(sample.CreditCard, "Sua mensagem caso ocorra erro aqui");
             });
 
-
             //Assert
-            Assert.True(Errors.Count == quantity);
+            Assert.Equal(quantity, contract.Errors.Count);
+            Assert.True(contract.Invalid);
         }
     }
 }

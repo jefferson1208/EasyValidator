@@ -1,8 +1,8 @@
 ﻿namespace EasyValidator.Validator.Validations
 {
-    public partial class EasyValidatorContract
+    public partial class EasyValidatorContract<T>
     {
-        public EasyValidatorContract IsGreater(dynamic val, dynamic comparer, string message)
+        public EasyValidatorContract<T> IsGreater(dynamic val, dynamic comparer, string message)
         {
             if ((double)val <= comparer)
                 AddError(message);
@@ -10,7 +10,7 @@
             return this;
         }
 
-        public EasyValidatorContract IsGreaterOrEquals(dynamic val, dynamic comparer, string message)
+        public EasyValidatorContract<T> IsGreaterOrEquals(dynamic val, dynamic comparer, string message)
         {
             if ((double)val < comparer)
                 AddError(message);
@@ -18,7 +18,7 @@
             return this;
         }
 
-        public EasyValidatorContract IsLower(dynamic val, dynamic comparer, string message)
+        public EasyValidatorContract<T> IsLower(dynamic val, dynamic comparer, string message)
         {
             if ((double)val >= comparer)
                 AddError(message);
@@ -26,7 +26,7 @@
             return this;
         }
 
-        public EasyValidatorContract IsLowerOrEquals(dynamic val, dynamic comparer, string message)
+        public EasyValidatorContract<T> IsLowerOrEquals(dynamic val, dynamic comparer, string message)
         {
             if ((double)val > comparer)
                 AddError(message);
@@ -34,7 +34,7 @@
             return this;
         }
 
-        public EasyValidatorContract AreEquals(dynamic val, dynamic comparer, string message)
+        public EasyValidatorContract<T> AreEquals(dynamic val, dynamic comparer, string message)
         {
             if (val != comparer)
                 AddError(message);
@@ -42,7 +42,7 @@
             return this;
         }
 
-        public EasyValidatorContract AreNotEquals(dynamic val, dynamic comparer, string message)
+        public EasyValidatorContract<T> AreNotEquals(dynamic val, dynamic comparer, string message)
         {
             if (val == comparer)
                 AddError(message);
@@ -50,7 +50,7 @@
             return this;
         }
 
-        public EasyValidatorContract IsBetween(dynamic val, dynamic from, dynamic to, string message)
+        public EasyValidatorContract<T> IsBetween(dynamic val, dynamic from, dynamic to, string message)
         {
             if (!(val > from && val < to))
                 AddError(message);

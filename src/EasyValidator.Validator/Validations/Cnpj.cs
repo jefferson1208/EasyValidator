@@ -1,9 +1,15 @@
 ﻿namespace EasyValidator.Validator.Validations
 {
-    public partial class EasyValidatorContract
+    public partial class EasyValidatorContract<T>
     {
-        public EasyValidatorContract IsCnpj(string cnpj, string message)
+        public EasyValidatorContract<T> IsCnpj(string cnpj, string message)
         {
+            if (string.IsNullOrEmpty(cnpj))
+            {
+                AddError(message);
+                return this;
+            }
+
             int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
             int[] multiplicador2 = new int[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 

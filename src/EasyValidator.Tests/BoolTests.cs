@@ -1,27 +1,29 @@
-﻿using EasyValidator.Validator.Errors;
+﻿using EasyValidator.Tests.Entity;
 using EasyValidator.Validator.Validations;
 using Xunit;
 
 namespace EasyValidator.Tests
 {
-    public class BoolTests : Notify
+    public class BoolTests
     {
+        private readonly Sample _entity = new Sample();
+
         [Fact(DisplayName = "Validação de Boleano. Verdadeiro")]
         [Trait("Bool", "Validação de Boleano")]
         public void ShouldReturnSuccessWhenValueIsTrue()
         {
             //Arrange
+            var contract = new EasyValidatorContract<Sample>()
+                    .Requires()
+                    .IsTrue(_entity.BoolTrueProperty, "Sua mensagem caso ocorra erro aqui")
+                    .IsTrue(_entity.BoolTrueProperty, "Sua mensagem caso ocorra erro aqui")
+                    .IsTrue(_entity.BoolFalseProperty, "Sua mensagem caso ocorra erro aqui")
+                    .IsTrue(_entity.BoolFalseProperty, "Sua mensagem caso ocorra erro aqui");
             //Act
 
-            for (int i = 0; i < 100; i++)
-            {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsTrue(true, "Campo deve ser verdadeiro"));
-            }
-
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.False(contract.Valid);
+            Assert.Equal(2, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de Boleano. Falso")]
@@ -29,17 +31,17 @@ namespace EasyValidator.Tests
         public void ShouldReturnErrorWhenValueIsFalse()
         {
             //Arrange
+            var contract = new EasyValidatorContract<Sample>()
+                    .Requires()
+                    .IsFalse(_entity.BoolTrueProperty, "Sua mensagem caso ocorra erro aqui")
+                    .IsFalse(_entity.BoolTrueProperty, "Sua mensagem caso ocorra erro aqui")
+                    .IsFalse(_entity.BoolFalseProperty, "Sua mensagem caso ocorra erro aqui")
+                    .IsFalse(_entity.BoolFalseProperty, "Sua mensagem caso ocorra erro aqui");
             //Act
 
-            for (int i = 0; i < 100; i++)
-            {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsFalse(false, "Campo deve ser verdadeiro"));
-            }
-
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.False(contract.Valid);
+            Assert.Equal(2, contract.Errors.Count);
         }
     }
 }

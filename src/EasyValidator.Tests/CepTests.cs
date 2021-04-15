@@ -1,12 +1,12 @@
-﻿using EasyValidator.Tests.Fixture;
-using EasyValidator.Validator.Errors;
+﻿using EasyValidator.Tests.Entity;
+using EasyValidator.Tests.Fixture;
 using EasyValidator.Validator.Validations;
 using Xunit;
 
 namespace EasyValidator.Tests
 {
     [Collection(nameof(CepCollection))]
-    public class CepTests : Notify
+    public class CepTests
     {
         private readonly CepTestsFixture _cepTestsFixture;
         public CepTests(CepTestsFixture cepTestsFixture)
@@ -19,18 +19,19 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenCepIsValid()
         {
             //Arrange
-            var ceps = _cepTestsFixture.GenerateListCepValid(100);
+            var samples = _cepTestsFixture.GenerateListCepValid(100);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            ceps.ForEach(cep =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsCep(cep, "CEP é obrigatório"));
+                contract.IsCep(sample.Cep, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.Equal(0, contract.Errors.Count);
+            Assert.True(contract.Valid);
         }
 
         [Fact(DisplayName = "Validação de CEP. Inválidos")]
@@ -39,19 +40,20 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var quantity = 100;
-            var ceps = _cepTestsFixture.GenerateListCepInvalid(quantity);
+            var samples = _cepTestsFixture.GenerateListCepInvalid(quantity);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            ceps.ForEach(cep =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsCep(cep, "CEP é obrigatório"));
+                contract.IsCep(sample.Cep, "Sua mensagem caso ocorra erro aqui");
+
             });
 
             //Assert
-            Assert.True(Errors.Count == quantity);
-
+            Assert.Equal(quantity, contract.Errors.Count);
+            Assert.True(contract.Invalid);
         }
     }
 }

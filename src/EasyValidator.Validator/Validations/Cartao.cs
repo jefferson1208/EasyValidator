@@ -1,12 +1,17 @@
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace EasyValidator.Validator.Validations
 {
-    partial class EasyValidatorContract
+    partial class EasyValidatorContract<T>
     {
-        public EasyValidatorContract IsCreditCard(string cardNumber, string message)
+        public EasyValidatorContract<T> IsCreditCard(string cardNumber, string message)
         {
+            if (string.IsNullOrEmpty(cardNumber))
+            {
+                AddError(message);
+                return this;
+            }
+
             var checkSum = 0;
             cardNumber = Regex.Replace(cardNumber, @"[^0-9]+", "");
 

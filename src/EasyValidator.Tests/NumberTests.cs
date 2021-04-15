@@ -1,26 +1,28 @@
-﻿using EasyValidator.Validator.Errors;
+﻿using EasyValidator.Tests.Entity;
 using EasyValidator.Validator.Validations;
 using Xunit;
 
 namespace EasyValidator.Tests
 {
-    public class NumberTests : Notify
+    public class NumberTests
     {
         [Fact(DisplayName = "Validação de Números. Maior que")]
         [Trait("Number", "Validação de Números")]
         public void ShouldReturnSuccessWhenNumberIsGreater()
         {
             //Arrange
+            var contract = new EasyValidatorContract<Sample>();
+
             //Act
+            contract.Requires();
             for (int i = 0; i < 1000; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsGreater(i + 1, i, "Campo deve ser maior do que o informado"));
+                contract.IsGreater(i + 1, i, "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de Números. Não é maior que")]
@@ -29,17 +31,18 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var quantity = 1000;
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
+            contract.Requires();
             for (int i = 0; i < quantity; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsGreater(i, i + 1, "Campo deve ser maior do que o informado"));
+                contract.IsGreater(i, i + 1, "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(Errors.Count == quantity);
+            Assert.True(contract.Invalid);
+            Assert.Equal(quantity, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de Números. Igual a")]
@@ -47,16 +50,18 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenNumberIsEqual()
         {
             //Arrange
+            var contract = new EasyValidatorContract<Sample>();
+
             //Act
+            contract.Requires();
             for (int i = 0; i < 1000; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsGreaterOrEquals(i, i, "Campo deve ser igual ao campo informado"));
+                contract.IsGreaterOrEquals(i, i, "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de Números. Menor que")]
@@ -64,16 +69,18 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenNumberIsLower()
         {
             //Arrange
+            var contract = new EasyValidatorContract<Sample>();
+
             //Act
+            contract.Requires();
             for (int i = 0; i < 1000; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsLower(i, i + 1, "Campo deve ser menor do que o informado"));
+                contract.IsLower(i, i + 1, "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de Números. Igual a")]
@@ -81,16 +88,18 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenNumberAreEquals()
         {
             //Arrange
+            var contract = new EasyValidatorContract<Sample>();
+
             //Act
+            contract.Requires();
             for (int i = 0; i < 1000; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .AreEquals(i, i, "Campo deve ser igual ao campo informado"));
+                contract.IsGreaterOrEquals(i, i, "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de Números. Não é igual a")]
@@ -98,16 +107,19 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenNumberAreNotEquals()
         {
             //Arrange
+            var contract = new EasyValidatorContract<Sample>();
+
             //Act
+            contract.Requires();
             for (int i = 0; i < 1000; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .AreNotEquals(i, i + 1, "Campo deve ser diferente do campo informado"));
+                contract.AreNotEquals(i, i + 1, "Sua mensagem caso ocorra erro aqui");
+
             }
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de Números. Está entre")]
@@ -115,16 +127,18 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenNumberIsBetween()
         {
             //Arrange
+            var contract = new EasyValidatorContract<Sample>();
+
             //Act
+            contract.Requires();
             for (int i = 0; i < 1000; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsBetween(i + 1, 0, 2000, "Campo deve estar entre 0 e 2000 do campo informado"));
+                contract.IsBetween(i + 1, 0, 2000, "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
     }
 }

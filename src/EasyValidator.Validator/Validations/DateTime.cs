@@ -1,10 +1,9 @@
 ﻿using System;
-
 namespace EasyValidator.Validator.Validations
 {
-    public partial class EasyValidatorContract
+    public partial class EasyValidatorContract<T>
     {
-        public EasyValidatorContract IsGreater(DateTime val, DateTime comparer, string message)
+        public EasyValidatorContract<T> IsGreater(DateTime val, DateTime comparer, string message)
         {
             if (val <= comparer)
                 AddError(message);
@@ -12,7 +11,7 @@ namespace EasyValidator.Validator.Validations
             return this;
         }
 
-        public EasyValidatorContract IsGreaterOrEquals(DateTime val, DateTime comparer, string message)
+        public EasyValidatorContract<T> IsGreaterOrEquals(DateTime val, DateTime comparer, string message)
         {
             if (val < comparer)
                 AddError(message);
@@ -20,7 +19,7 @@ namespace EasyValidator.Validator.Validations
             return this;
         }
 
-        public EasyValidatorContract IsLower(DateTime val, DateTime comparer, string message)
+        public EasyValidatorContract<T> IsLower(DateTime val, DateTime comparer, string message)
         {
             if (val >= comparer)
                 AddError(message);
@@ -28,7 +27,7 @@ namespace EasyValidator.Validator.Validations
             return this;
         }
 
-        public EasyValidatorContract IsLowerOrEquals(DateTime val, DateTime comparer, string message)
+        public EasyValidatorContract<T> IsLowerOrEquals(DateTime val, DateTime comparer, string message)
         {
             if (val > comparer)
                 AddError(message);
@@ -37,7 +36,7 @@ namespace EasyValidator.Validator.Validations
         }
 
 
-        public EasyValidatorContract IsBetween(DateTime val, DateTime from, DateTime to, string message)
+        public EasyValidatorContract<T> IsBetween(DateTime val, DateTime from, DateTime to, string message)
         {
             if (!(val > from && val < to))
                 AddError(message);

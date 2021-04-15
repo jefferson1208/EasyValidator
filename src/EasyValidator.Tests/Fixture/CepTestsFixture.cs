@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using EasyValidator.Tests.Entity;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -14,35 +15,35 @@ namespace EasyValidator.Tests.Fixture
     {
         public void Dispose()
         {
-            
+
         }
 
-        public List<string> GenerateListCepValid(int quantity)
+        public List<Sample> GenerateListCepValid(int quantity)
         {
-            var phones = new List<string>();
-
-            for (int i = 0; i < quantity; i++)
-            {
-                var faker = new Faker("pt_BR");
-                
-                phones.Add(faker.Person.Address.ZipCode);
-            }
-
-            return phones;
-        }
-
-        public List<string> GenerateListCepInvalid(int quantity)
-        {
-            var phones = new List<string>();
+            var ceps = new List<Sample>();
 
             for (int i = 0; i < quantity; i++)
             {
                 var faker = new Faker("pt_BR");
 
-                phones.Add(faker.Random.Int().ToString());
+                ceps.Add(new Sample { Cep = faker.Person.Address.ZipCode });
             }
 
-            return phones;
+            return ceps;
+        }
+
+        public List<Sample> GenerateListCepInvalid(int quantity)
+        {
+            var ceps = new List<Sample>();
+
+            for (int i = 0; i < quantity; i++)
+            {
+                var faker = new Faker("pt_BR");
+
+                ceps.Add(new Sample { Cep = faker.Random.Int().ToString() });
+            }
+
+            return ceps;
         }
     }
 }

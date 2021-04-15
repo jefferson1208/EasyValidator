@@ -1,13 +1,12 @@
-﻿using EasyValidator.Tests.Enums;
+﻿using EasyValidator.Tests.Entity;
+using EasyValidator.Tests.Enums;
 using EasyValidator.Tests.Fixture;
-using Xunit;
 using EasyValidator.Validator.Validations;
-using EasyValidator.Validator.Errors;
-
+using Xunit;
 namespace EasyValidator.Tests
 {
     [Collection(nameof(DocumentCollection))]
-    public class DocumentTest : Notify
+    public class DocumentTest
     {
         private readonly DocumentTestsFixture _documentTestsFixture;
         public DocumentTest(DocumentTestsFixture documentTestsFixture)
@@ -20,19 +19,19 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenCpfIsValid()
         {
             //Arrange
-            var documents = _documentTestsFixture.GenerateDocumentsValid(100, EDocumentType.Cpf);
+            var samples = _documentTestsFixture.GenerateDocumentsValid(100, EDocumentType.Cpf);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            documents.ForEach(document =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                    .Requires()
-                                    .IsCpf(document, "CPF Inválido"));
-
+                contract.IsCpf(sample.Cpf, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de CPF. Inválidos")]
@@ -41,19 +40,19 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var quantity = 100;
-            var documents = _documentTestsFixture.GenerateDocumentsInvalid(quantity, EDocumentType.Cpf);
+            var samples = _documentTestsFixture.GenerateDocumentsInvalid(quantity, EDocumentType.Cpf);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            documents.ForEach(document =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                    .Requires()
-                                    .IsCpf(document, "CPF Inválido"));
-
+                contract.IsCpf(sample.Cpf, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == quantity);
+            Assert.True(contract.Invalid);
+            Assert.Equal(quantity, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de CNPJ. Válidos")]
@@ -61,19 +60,19 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenCnpjIsValid()
         {
             //Arrange
-            var documents = _documentTestsFixture.GenerateDocumentsValid(100, EDocumentType.Cnpj);
+            var samples = _documentTestsFixture.GenerateDocumentsValid(100, EDocumentType.Cnpj);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            documents.ForEach(document =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                    .Requires()
-                                    .IsCnpj(document, "CNPJ Inválido"));
-
+                contract.IsCnpj(sample.Cnpj, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de CNPJ. Inválidos")]
@@ -82,18 +81,19 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var quantity = 100;
-            var documents = _documentTestsFixture.GenerateDocumentsInvalid(quantity, EDocumentType.Cnpj);
+            var samples = _documentTestsFixture.GenerateDocumentsInvalid(quantity, EDocumentType.Cnpj);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            documents.ForEach(document =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                    .Requires()
-                                    .IsCnpj(document, "CNPJ Inválido"));
+                contract.IsCnpj(sample.Cnpj, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == quantity);
+            Assert.True(contract.Invalid);
+            Assert.Equal(quantity, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de CNH. Válidas")]
@@ -101,19 +101,19 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenCnhIsValid()
         {
             //Arrange
-            var documents = _documentTestsFixture.GenerateCnhValid();
+            var samples = _documentTestsFixture.GenerateCnhValid();
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            documents.ForEach(document =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                    .Requires()
-                                    .IsCnh(document, string.Concat("CNH ", document, " inválida")));
-
+                contract.IsCnh(sample.Cnh, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
     }
 }

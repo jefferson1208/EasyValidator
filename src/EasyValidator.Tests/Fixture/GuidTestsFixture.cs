@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using EasyValidator.Tests.Entity;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -12,32 +13,32 @@ namespace EasyValidator.Tests.Fixture
     }
     public class GuidTestsFixture : IDisposable
     {
-        public List<string> GenerateListGuidValid(int quantity)
+        public List<Sample> GenerateListGuidValid(int quantity)
         {
-            var guids = new List<string>();
+            var samples = new List<Sample>();
 
             for (int i = 0; i < quantity; i++)
             {
                 var faker = new Faker("pt_BR");
 
-                guids.Add(faker.Random.Guid().ToString());
+                samples.Add(new Sample { Guid = faker.Random.Guid().ToString() });
             }
 
-            return guids;
+            return samples;
         }
 
-        public List<string> GenerateListGuidInvalid(int quantity)
+        public List<Sample> GenerateListGuidInvalid(int quantity)
         {
-            var guids = new List<string>();
+            var samples = new List<Sample>();
 
             for (int i = 0; i < quantity; i++)
             {
                 var faker = new Faker("pt_BR");
 
-                guids.Add(faker.Random.String());
+                samples.Add(new Sample { Guid = faker.Random.String() });
             }
 
-            return guids;
+            return samples;
         }
         public void Dispose()
         {

@@ -1,9 +1,15 @@
 ﻿namespace EasyValidator.Validator.Validations
 {
-    public partial class EasyValidatorContract
+    public partial class EasyValidatorContract<T>
     {
-        public EasyValidatorContract IsCpf(string cpf, string message)
+        public EasyValidatorContract<T> IsCpf(string cpf, string message)
         {
+            if (string.IsNullOrEmpty(cpf))
+            {
+                AddError(message);
+                return this;
+            }
+
             var multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             var multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
@@ -11,7 +17,7 @@
 
             cpf = cpf.Trim();
             cpf = cpf.Replace(".", "").Replace("-", "");
-            
+
             if (cpf.Length != 11)
             {
                 AddError(message);
@@ -44,7 +50,7 @@
 
             if (!cpf.EndsWith(digito))
                 AddError(message);
-            
+
             return this;
         }
     }

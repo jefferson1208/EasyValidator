@@ -1,14 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
-
 namespace EasyValidator.Validator.Validations
 {
-    public partial class EasyValidatorContract
+    public partial class EasyValidatorContract<T>
     {
-        public EasyValidatorContract IsCnh(string value, string message)
+        public EasyValidatorContract<T> IsCnh(string value, string message)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                AddError(message);
+                return this;
+            }
+
             var isValid = false;
             value = Regex.Replace(value, @"[^0-9]+", "");
 

@@ -1,8 +1,8 @@
 ﻿namespace EasyValidator.Validator.Validations
 {
-    public partial class EasyValidatorContract
+    public partial class EasyValidatorContract<T>
     {
-        public EasyValidatorContract IsTrue(bool val, string message)
+        public EasyValidatorContract<T> IsTrue(bool val, string message)
         {
             if (!val)
                 AddError(message);
@@ -10,7 +10,7 @@
             return this;
         }
 
-        public EasyValidatorContract IsFalse(bool val, string message)
+        public EasyValidatorContract<T> IsFalse(bool val, string message)
         {
             if (val)
                 AddError(message);

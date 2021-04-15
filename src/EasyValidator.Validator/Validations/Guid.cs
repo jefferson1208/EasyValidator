@@ -3,11 +3,11 @@ using System.Text.RegularExpressions;
 
 namespace EasyValidator.Validator.Validations
 {
-    public partial class EasyValidatorContract
+    public partial class EasyValidatorContract<T>
     {
-        public EasyValidatorContract IsGuidNotEmpty(string guid, string message)
+        public EasyValidatorContract<T> IsGuidNotEmpty(string guid, string message)
         {
-            if(guid == Guid.Empty.ToString())
+            if (guid == Guid.Empty.ToString())
             {
                 AddError(message);
                 return this;

@@ -1,4 +1,4 @@
-﻿using Bogus;
+﻿using EasyValidator.Tests.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,25 +13,26 @@ namespace EasyValidator.Tests.Fixture
     }
     public class VeiculoTestsFixture : IDisposable
     {
-        public List<string> GenerateCarLicensePlate(int quantity, int lettersLength, int numberLength)
+        public List<Sample> GenerateCarLicensePlate(int quantity, int lettersLength, int numberLength)
         {
-            var licenses = new List<string>();
+            var licenses = new List<Sample>();
 
             for (int i = 0; i < quantity; i++)
-                licenses.Add(string.Concat(GenerateLetters(lettersLength), GenerateNumbers(numberLength)));
+                licenses.Add(new Sample { LicensePlate = string.Concat(GenerateLetters(lettersLength), GenerateNumbers(numberLength)) });
 
             return licenses;
         }
 
-        public List<string> GenerateCarLicensePlateMercosul(int quantity, int lettersLength, int numberLength)
+        public List<Sample> GenerateCarLicensePlateMercosul(int quantity, int lettersLength, int numberLength)
         {
-            var licenses = new List<string>();
+            var licenses = new List<Sample>();
 
             for (int i = 0; i < quantity; i++)
-                licenses.Add(string.Concat(GenerateLetters(lettersLength),
+                licenses.Add(new Sample { LicensePlate = string.Concat(GenerateLetters(lettersLength),
                 GenerateNumbers(1),
                 GenerateLetters(1),
-                GenerateNumbers(numberLength)));
+                GenerateNumbers(numberLength))
+                });
 
             return licenses;
         }

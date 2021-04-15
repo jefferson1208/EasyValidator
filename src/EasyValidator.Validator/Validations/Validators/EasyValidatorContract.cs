@@ -2,14 +2,14 @@
 
 namespace EasyValidator.Validator.Validations
 {
-    public partial class EasyValidatorContract : Notify
+    public partial class EasyValidatorContract<T> : Notify<Error>
     {
-        public EasyValidatorContract Requires()
+        public EasyValidatorContract<T> Requires()
         {
             return this;
         }
 
-        public EasyValidatorContract Concat(Notify notify)
+        public EasyValidatorContract<T> Concat(Notify<Error> notify)
         {
             if (notify.Invalid)
                 AddErrors(notify.Errors);

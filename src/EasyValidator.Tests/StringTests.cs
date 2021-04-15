@@ -1,4 +1,5 @@
-﻿using EasyValidator.Tests.Fixture;
+﻿using EasyValidator.Tests.Entity;
+using EasyValidator.Tests.Fixture;
 using EasyValidator.Validator.Errors;
 using EasyValidator.Validator.Validations;
 using Xunit;
@@ -6,7 +7,7 @@ using Xunit;
 namespace EasyValidator.Tests
 {
     [Collection(nameof(StringCollection))]
-    public class StringTests : Notify
+    public class StringTests
     {
         private readonly StringTestsFixture _stringTestsFixture;
 
@@ -20,19 +21,19 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenValueIsTrue()
         {
             //Arrange
-            var listNames = _stringTestsFixture.GenerateListNames(1000, 5);
+            var samples = _stringTestsFixture.GenerateListNames(1000, 5);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-
-            listNames.ForEach(n =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .HasMinimumLength(n, 5, "Error"));
+                contract.HasMinimumLength(sample.Name, 5, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. Não Nulo")]
@@ -41,18 +42,18 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var quantity = 1000;
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-
+            contract.Requires();
             for (int i = 0; i < quantity; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsNotNullOrEmpty(null, "Error"));
+                contract.IsNotNullOrEmpty(null, "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(Errors.Count == quantity);
+            Assert.True(contract.Invalid);
+            Assert.Equal(quantity, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. Não Vazio")]
@@ -61,18 +62,18 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var quantity = 1000;
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-
+            contract.Requires();
             for (int i = 0; i < quantity; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsNotNullOrEmpty(string.Empty, "Error"));
+                contract.IsNotNullOrEmpty(string.Empty, "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(Errors.Count == quantity);
+            Assert.True(contract.Invalid);
+            Assert.Equal(quantity, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. É Nulo")]
@@ -80,17 +81,18 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenValueIsNull()
         {
             //Arrange
-            //Act
+            var contract = new EasyValidatorContract<Sample>();
 
+            //Act
+            contract.Requires();
             for (int i = 0; i < 1000; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsNullOrEmpty(null, "Error"));
+                contract.IsNullOrEmpty(null, "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. É Vazio")]
@@ -98,17 +100,18 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenValueIsEmpty()
         {
             //Arrange
-            //Act
+            var contract = new EasyValidatorContract<Sample>();
 
+            //Act
+            contract.Requires();
             for (int i = 0; i < 1000; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsNullOrEmpty(string.Empty, "Error"));
+                contract.IsNullOrEmpty(string.Empty, "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. Tem espaço em branco")]
@@ -116,17 +119,18 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccessWhenValueWithWhiteSpace()
         {
             //Arrange
-            //Act
+            var contract = new EasyValidatorContract<Sample>();
 
+            //Act
+            contract.Requires();
             for (int i = 0; i < 1000; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsNullOrWhiteSpace(" ", "Error"));
+                contract.IsNullOrWhiteSpace(" ", "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. Não tem espaço em branco")]
@@ -135,18 +139,18 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var quantity = 1000;
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-
+            contract.Requires();
             for (int i = 0; i < quantity; i++)
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsNotNullOrWhiteSpace(" ", "Error"));
+                contract.IsNotNullOrWhiteSpace(" ", "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(Errors.Count == quantity);
+            Assert.True(contract.Invalid);
+            Assert.Equal(quantity, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. Tamanho igual")]
@@ -155,19 +159,19 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var size = 5;
-            var listNames = _stringTestsFixture.GenerateListNames(1000, size);
+            var samples = _stringTestsFixture.GenerateListNames(1000, size);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-
-            listNames.ForEach(n =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .HasLength(n, size, "Error"));
+                contract.HasLength(sample.Name, size, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. Tamanho diferente")]
@@ -177,19 +181,19 @@ namespace EasyValidator.Tests
             //Arrange
             var quantity = 1000;
             var size = 5;
-            var listNames = _stringTestsFixture.GenerateListNames(quantity, size);
+            var samples = _stringTestsFixture.GenerateListNames(quantity, size);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-
-            listNames.ForEach(n =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .HasLength(n, 4, "Error"));
+                contract.HasLength(sample.Name, 4, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == quantity);
+            Assert.True(contract.Invalid);
+            Assert.Equal(quantity, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. Contem")]
@@ -198,19 +202,19 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var size = 5;
-            var listNames = _stringTestsFixture.GenerateListNames(1000, size);
+            var samples = _stringTestsFixture.GenerateListNames(1000, size);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-
-            listNames.ForEach(n =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .Contains(string.Concat(n, "-", n), n, "Error"));
+                contract.Contains(string.Concat(sample.Name, "-", sample.Name), sample.Name, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. Não Contem")]
@@ -219,22 +223,22 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var size = 5;
-            var listNames = _stringTestsFixture.GenerateListNames(1000, size);
+            var samples = _stringTestsFixture.GenerateListNames(1000, size);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
+            contract.Requires();
             var index = 0;
 
-            listNames.ForEach(n =>
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .NotContains(string.Concat(n, "-", n), index.ToString(), "Error"));
-
+                contract.NotContains(string.Concat(sample.Name, "-", sample.Name), index.ToString(), "Sua mensagem caso ocorra erro aqui");
                 index++;
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. Contem na lista")]
@@ -243,19 +247,19 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var size = 5;
-            var listNames = _stringTestsFixture.GenerateListNames(1000, size);
+            var samples = _stringTestsFixture.GenerateListNames(1000, size);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-
-            listNames.ForEach(n =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .ContainsInList(n, listNames, "Error"));
+                contract.ContainsInList(sample, samples, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. Não contém na lista")]
@@ -264,22 +268,22 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var size = 5;
-            var listNames = _stringTestsFixture.GenerateListNames(1000, size);
+            var samples = _stringTestsFixture.GenerateListNames(1000, size);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-
+            contract.Requires();
             var index = 0;
 
-            listNames.ForEach(n =>
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .NotContainsInList(string.Concat(n, index), listNames, "Error"));
+                contract.NotContainsInList(null, samples, "Sua mensagem caso ocorra erro aqui");
                 index++;
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. E-mail válido")]
@@ -287,18 +291,19 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccesWhenValueIsEmail()
         {
             //Arrange
-            var listEmails = _stringTestsFixture.GenerateListEmailsValid(1000);
+            var samples = _stringTestsFixture.GenerateListEmailsValid(1000);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            listEmails.ForEach(email =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsEmail(email, "Error"));
+                contract.IsEmail(sample.Email, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. E-mail inválido")]
@@ -306,18 +311,19 @@ namespace EasyValidator.Tests
         public void ShouldReturnErrorWhenValueIsNotEmail()
         {
             //Arrange
-            var listEmails = _stringTestsFixture.GenerateListEmailsInvalid(1000);
+            var samples = _stringTestsFixture.GenerateListEmailsInvalid(1000);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            listEmails.ForEach(email =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsNotEmail(email, "Error"));
+                contract.IsNotEmail(sample.Email, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. URL válida")]
@@ -325,18 +331,19 @@ namespace EasyValidator.Tests
         public void ShouldReturnSuccesWhenValueIsUrl()
         {
             //Arrange
-            var urls = _stringTestsFixture.GenerateListUrlsValid(1000);
+            var samples = _stringTestsFixture.GenerateListUrlsValid(1000);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            urls.ForEach(url =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsUrl(url, "Error"));
+                contract.IsUrl(sample.Url, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
 
         [Fact(DisplayName = "Validação de String. URL inválida")]
@@ -344,18 +351,19 @@ namespace EasyValidator.Tests
         public void ShouldReturnErrorWhenValueIsNotUrl()
         {
             //Arrange
-            var urls = _stringTestsFixture.GenerateListUrlsInvalid(1000);
+            var samples = _stringTestsFixture.GenerateListUrlsInvalid(1000);
+            var contract = new EasyValidatorContract<Sample>();
 
             //Act
-            urls.ForEach(url =>
+            contract.Requires();
+            samples.ForEach(sample =>
             {
-                AddErrors(new EasyValidatorContract()
-                                        .Requires()
-                                        .IsNotUrl(url, "Error"));
+                contract.IsNotUrl(sample.Url, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert
-            Assert.True(Errors.Count == 0);
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
         }
     }
 }

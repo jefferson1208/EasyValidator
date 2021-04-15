@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using EasyValidator.Tests.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,75 +15,75 @@ namespace EasyValidator.Tests.Fixture
     public class StringTestsFixture : IDisposable
     {
 
-        public List<string> GenerateListNames(int quantity, int len)
+        public List<Sample> GenerateListNames(int quantity, int len)
         {
-            var listNames = new List<string>();
+            var samples = new List<Sample>();
 
             for (int i = 0; i < quantity; i++)
             {
                 var faker = new Faker(locale: "pt_BR");
 
-                listNames.Add(faker.Person.FullName.Substring(0, len));
+                samples.Add(new Sample { Name = faker.Person.FullName.Substring(0, len) });
             }
 
-            return listNames;
+            return samples;
 
         }
 
-        public List<string> GenerateListEmailsValid(int quantity)
+        public List<Sample> GenerateListEmailsValid(int quantity)
         {
-            var listEmails = new List<string>();
+            var samples = new List<Sample>();
 
             for (int i = 0; i < quantity; i++)
             {
                 var faker = new Faker(locale: "pt_BR");
 
-                listEmails.Add(faker.Person.Email);
+                samples.Add(new Sample { Email = faker.Person.Email });
             }
 
-            return listEmails;
+            return samples;
 
         }
 
-        public List<string> GenerateListEmailsInvalid(int quantity)
+        public List<Sample> GenerateListEmailsInvalid(int quantity)
         {
-            var listEmails = new List<string>();
+            var samples = new List<Sample>();
 
             for (int i = 0; i < quantity; i++)
             {
                 var faker = new Faker(locale: "pt_BR");
 
-                listEmails.Add(faker.Person.FullName);
+                samples.Add(new Sample { Email = faker.Person.FullName });
             }
 
-            return listEmails;
+            return samples;
 
         }
 
-        public List<string> GenerateListUrlsValid(int quantity)
+        public List<Sample> GenerateListUrlsValid(int quantity)
         {
-            var urls = new List<string>();
+            var samples = new List<Sample>();
 
             for (int i = 0; i < quantity; i++)
-            {                
-                urls.Add(string.Concat("https://www.", GenerateLetters(10), ".com.br"));
+            {
+                samples.Add(new Sample { Url = string.Concat("https://www.", GenerateLetters(10), ".com.br") });
             }
 
-            return urls;
+            return samples;
 
         }
 
-        public List<string> GenerateListUrlsInvalid(int quantity)
+        public List<Sample> GenerateListUrlsInvalid(int quantity)
         {
-            var urls = new List<string>();
+            var samples = new List<Sample>();
 
             for (int i = 0; i < quantity; i++)
             {
                 var faker = new Faker(locale: "pt_BR");
-                urls.Add(faker.Person.Website);
+                samples.Add(new Sample { Url = faker.Person.Website });
             }
 
-            return urls;
+            return samples;
 
         }
 

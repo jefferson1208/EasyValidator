@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EasyValidator.Validator.Errors
 {
-    public abstract class Notify
+    public abstract class Notify<T> where T : Error
     {
         private readonly List<Error> _errors;
 
@@ -37,12 +37,12 @@ namespace EasyValidator.Validator.Errors
             _errors.AddRange(errors);
         }
 
-        public void AddErrors(Notify item)
+        public void AddErrors(Notify<T> item)
         {
             AddErrors(item.Errors);
         }
 
-        public void AddErrors(params Notify[] items)
+        public void AddErrors(params Notify<T>[] items)
         {
             foreach (var item in items)
                 AddErrors(item);
