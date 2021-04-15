@@ -1,5 +1,6 @@
 ﻿using EasyValidator.Tests.Entity;
 using EasyValidator.Validator.Validations;
+using System.Collections.Generic;
 using Xunit;
 
 namespace EasyValidator.Tests
@@ -139,6 +140,25 @@ namespace EasyValidator.Tests
             //Assert
             Assert.True(contract.Valid);
             Assert.Equal(0, contract.Errors.Count);
+        }
+
+        [Fact(DisplayName = "Validação de Números. Contem na lista")]
+        [Trait("Number", "Validação de Números")]
+        public void ShouldReturnSuccessWhenNumberContainsInList()
+        {
+            //Arrange
+            var contract = new EasyValidatorContract<Sample>();
+            var samples = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            //Act
+            contract.Requires();
+            for (int i = 0; i < 1000; i++)
+            {
+                contract.ContainsInList(i, samples, "Sua mensagem caso ocorra erro aqui");
+            }
+
+            //Assert
+            Assert.True(contract.Invalid);
+            Assert.Equal(989, contract.Errors.Count);
         }
     }
 }

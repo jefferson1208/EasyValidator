@@ -1,4 +1,6 @@
-﻿namespace EasyValidator.Validator.Validations
+﻿using System.Collections.Generic;
+
+namespace EasyValidator.Validator.Validations
 {
     public partial class EasyValidatorContract<T>
     {
@@ -53,6 +55,69 @@
         public EasyValidatorContract<T> IsBetween(dynamic val, dynamic from, dynamic to, string message)
         {
             if (!(val > from && val < to))
+                AddError(message);
+
+            return this;
+        }
+
+        public EasyValidatorContract<T> ContainsInList(int val, IList<int> comparer, string message)
+        {
+            var index = comparer.IndexOf(val);
+
+            if (index < 0)
+                AddError(message);
+
+            return this;
+        }
+
+
+        public EasyValidatorContract<T> NotContainsInList(int val, IList<int> comparer, string message)
+        {
+            var index = comparer.IndexOf(val);
+
+            if (index >= 0)
+                AddError(message);
+
+            return this;
+        }
+
+        public EasyValidatorContract<T> ContainsInList(decimal val, IList<decimal> comparer, string message)
+        {
+            var index = comparer.IndexOf(val);
+
+            if (index < 0)
+                AddError(message);
+
+            return this;
+        }
+
+
+        public EasyValidatorContract<T> NotContainsInList(decimal val, IList<decimal> comparer, string message)
+        {
+            var index = comparer.IndexOf(val);
+
+            if (index >= 0)
+                AddError(message);
+
+            return this;
+        }
+
+        public EasyValidatorContract<T> ContainsInList(double val, IList<double> comparer, string message)
+        {
+            var index = comparer.IndexOf(val);
+
+            if (index < 0)
+                AddError(message);
+
+            return this;
+        }
+
+
+        public EasyValidatorContract<T> NotContainsInList(double val, IList<double> comparer, string message)
+        {
+            var index = comparer.IndexOf(val);
+
+            if (index >= 0)
                 AddError(message);
 
             return this;

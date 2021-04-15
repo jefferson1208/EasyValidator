@@ -1,4 +1,5 @@
-﻿namespace EasyValidator.Validator.Errors
+﻿
+namespace EasyValidator.Validator.Errors
 {
     public class Error
     {

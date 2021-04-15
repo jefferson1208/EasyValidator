@@ -30,6 +30,21 @@ namespace EasyValidator.Tests.Fixture
 
         }
 
+        public List<string> GenerateListStringNames(int quantity, int len)
+        {
+            var samples = new List<string>();
+
+            for (int i = 0; i < quantity; i++)
+            {
+                var faker = new Faker(locale: "pt_BR");
+
+                samples.Add(faker.Person.FullName.Substring(0, len));
+            }
+
+            return samples;
+
+        }
+
         public List<Sample> GenerateListEmailsValid(int quantity)
         {
             var samples = new List<Sample>();

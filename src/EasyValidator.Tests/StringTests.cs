@@ -1,6 +1,5 @@
 ﻿using EasyValidator.Tests.Entity;
 using EasyValidator.Tests.Fixture;
-using EasyValidator.Validator.Errors;
 using EasyValidator.Validator.Validations;
 using Xunit;
 
@@ -210,6 +209,27 @@ namespace EasyValidator.Tests
             samples.ForEach(sample =>
             {
                 contract.Contains(string.Concat(sample.Name, "-", sample.Name), sample.Name, "Sua mensagem caso ocorra erro aqui");
+            });
+
+            //Assert
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
+        }
+
+        [Fact(DisplayName = "Validação de String. Contem")]
+        [Trait("String", "Validação de String")]
+        public void ShouldReturnSuccesWhenValueContainsString()
+        {
+            //Arrange
+            var size = 5;
+            var samples = _stringTestsFixture.GenerateListStringNames(1000, size);
+            var contract = new EasyValidatorContract<Sample>();
+
+            //Act
+            contract.Requires();
+            samples.ForEach(sample =>
+            {
+                contract.ContainsInList(sample, samples, "Sua mensagem caso ocorra erro aqui");
             });
 
             //Assert

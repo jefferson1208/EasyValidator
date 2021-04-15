@@ -77,7 +77,7 @@ namespace EasyValidator.Validator.Validations
             return this;
         }
 
-        public EasyValidatorContract<T> ContainsInList(T val, List<T> comparer, string message)
+        public EasyValidatorContract<T> ContainsInList(string val, IList<string> comparer, string message)
         {
             var index = comparer.IndexOf(val);
 
@@ -87,7 +87,8 @@ namespace EasyValidator.Validator.Validations
             return this;
         }
 
-        public EasyValidatorContract<T> NotContainsInList(T val, List<T> comparer, string message)
+
+        public EasyValidatorContract<T> NotContainsInList(string val, IList<string> comparer, string message)
         {
             var index = comparer.IndexOf(val);
 
