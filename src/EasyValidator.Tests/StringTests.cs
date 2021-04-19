@@ -385,5 +385,45 @@ namespace EasyValidator.Tests
             Assert.True(contract.Valid);
             Assert.Equal(0, contract.Errors.Count);
         }
+
+        [Fact(DisplayName = "Validação de Números. Um valor primário ou secundário é informado")]
+        [Trait("Number", "Validação de Números")]
+        public void ShouldReturnSuccessWhenAPrimaryOrSecundaryNumberIsEntered()
+        {
+            //Arrange
+            var contract = new EasyValidatorContract<Sample>();
+
+            //Act
+            contract.Requires();
+            contract.OneOrAnother("teste", "", "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother("", "teste", "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother("teste", "", "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother("teste", "teste", "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother("", "teste", "Sua mensagem caso ocorra erro aqui");
+
+            //Assert
+            Assert.True(contract.Valid);
+            Assert.Equal(0, contract.Errors.Count);
+        }
+
+        [Fact(DisplayName = "Validação de Números. Um valor primário ou secundário não é informado")]
+        [Trait("Number", "Validação de Números")]
+        public void ShouldReturnErrorWhenAPrimaryOrSecundaryNumberIsNotEntered()
+        {
+            //Arrange
+            var contract = new EasyValidatorContract<Sample>();
+
+            //Act
+            contract.Requires();
+            contract.OneOrAnother("", "", "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother("", "", "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother("", "", "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother("", "", "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother("", "", "Sua mensagem caso ocorra erro aqui");
+
+            //Assert
+            Assert.True(contract.Invalid);
+            Assert.Equal(5, contract.Errors.Count);
+        }
     }
 }

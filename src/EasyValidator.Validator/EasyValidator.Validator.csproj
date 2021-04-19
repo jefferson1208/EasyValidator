@@ -10,7 +10,7 @@
     <Description>Pacote para validação das propriedades de uma classe</Description>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jefferson1208/EasyValidator</RepositoryUrl>
-    <PackageIcon>easyvalidator.JPG</PackageIcon>
+    <PackageIcon>easyvalidator.jpeg</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\..\Users\jeffe\Desktop\easyvalidator.JPG">
+    <None Include="..\..\..\..\Users\jeffe\Desktop\easyvalidator.jpeg">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

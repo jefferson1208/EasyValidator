@@ -122,5 +122,15 @@ namespace EasyValidator.Validator.Validations
 
             return this;
         }
+
+        public EasyValidatorContract<T> OneOrAnother(dynamic priorityValue, dynamic secundaryValue, string message)
+        {
+            var value = priorityValue + secundaryValue;
+
+            if (value <= 0)
+                AddError(message);
+
+            return this;
+        }
     }
 }

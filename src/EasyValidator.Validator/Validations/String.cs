@@ -139,5 +139,21 @@ namespace EasyValidator.Validator.Validations
 
             return this;
         }
+
+        public EasyValidatorContract<T> OneOrAnother(string priorityValue, string secundaryValue, string message)
+        {
+            if (string.IsNullOrEmpty(priorityValue) && string.IsNullOrEmpty(secundaryValue))
+            {
+                AddError(message);
+                return this;
+            }
+
+            var value = priorityValue.Length + secundaryValue.Length;
+
+            if (value <= 0)
+                AddError(message);
+
+            return this;
+        }
     }
 }
