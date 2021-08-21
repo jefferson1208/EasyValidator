@@ -54,7 +54,7 @@ namespace EasyValidator.Tests
 
             //Assert
             Assert.Equal(quantity, contract.Errors.Count);
-            Assert.True(contract.Invalid);
+            Assert.False(contract.Valid);
         }
     }
 }

@@ -51,7 +51,7 @@ namespace EasyValidator.Tests
             }
 
             //Assert
-            Assert.True(contract.Invalid);
+            Assert.False(contract.Valid);
             Assert.Equal(quantity, contract.Errors.Count);
         }
 
@@ -71,7 +71,7 @@ namespace EasyValidator.Tests
             }
 
             //Assert
-            Assert.True(contract.Invalid);
+            Assert.False(contract.Valid);
             Assert.Equal(quantity, contract.Errors.Count);
         }
 
@@ -148,7 +148,7 @@ namespace EasyValidator.Tests
             }
 
             //Assert
-            Assert.True(contract.Invalid);
+            Assert.False(contract.Valid);
             Assert.Equal(quantity, contract.Errors.Count);
         }
 
@@ -191,7 +191,7 @@ namespace EasyValidator.Tests
             });
 
             //Assert
-            Assert.True(contract.Invalid);
+            Assert.False(contract.Valid);
             Assert.Equal(quantity, contract.Errors.Count);
         }
 
@@ -422,7 +422,7 @@ namespace EasyValidator.Tests
             contract.OneOrAnother("", "", "Sua mensagem caso ocorra erro aqui");
 
             //Assert
-            Assert.True(contract.Invalid);
+            Assert.False(contract.Valid);
             Assert.Equal(5, contract.Errors.Count);
         }
     }

@@ -7,6 +7,7 @@ namespace EasyValidator.Tests
 {
     public class NumberTests
     {
+        #region "decimal"
         [Fact(DisplayName = "Validação de Números. Maior que")]
         [Trait("Number", "Validação de Números")]
         public void ShouldReturnSuccessWhenNumberIsGreater()
@@ -16,7 +17,7 @@ namespace EasyValidator.Tests
 
             //Act
             contract.Requires();
-            for (int i = 0; i < 1000; i++)
+            for (decimal i = 0; i < 1000; i++)
             {
                 contract.IsGreater(i + 1, i, "Sua mensagem caso ocorra erro aqui");
             }
@@ -36,13 +37,13 @@ namespace EasyValidator.Tests
 
             //Act
             contract.Requires();
-            for (int i = 0; i < quantity; i++)
+            for (decimal i = 0; i < quantity; i++)
             {
                 contract.IsGreater(i, i + 1, "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(contract.Invalid);
+            Assert.False(contract.Valid);
             Assert.Equal(quantity, contract.Errors.Count);
         }
 
@@ -55,7 +56,7 @@ namespace EasyValidator.Tests
 
             //Act
             contract.Requires();
-            for (int i = 0; i < 1000; i++)
+            for (decimal i = 0; i < 1000; i++)
             {
                 contract.IsGreaterOrEquals(i, i, "Sua mensagem caso ocorra erro aqui");
             }
@@ -74,7 +75,7 @@ namespace EasyValidator.Tests
 
             //Act
             contract.Requires();
-            for (int i = 0; i < 1000; i++)
+            for (decimal i = 0; i < 1000; i++)
             {
                 contract.IsLower(i, i + 1, "Sua mensagem caso ocorra erro aqui");
             }
@@ -93,7 +94,7 @@ namespace EasyValidator.Tests
 
             //Act
             contract.Requires();
-            for (int i = 0; i < 1000; i++)
+            for (decimal i = 0; i < 1000; i++)
             {
                 contract.IsGreaterOrEquals(i, i, "Sua mensagem caso ocorra erro aqui");
             }
@@ -112,7 +113,7 @@ namespace EasyValidator.Tests
 
             //Act
             contract.Requires();
-            for (int i = 0; i < 1000; i++)
+            for (decimal i = 0; i < 1000; i++)
             {
                 contract.AreNotEquals(i, i + 1, "Sua mensagem caso ocorra erro aqui");
 
@@ -132,7 +133,7 @@ namespace EasyValidator.Tests
 
             //Act
             contract.Requires();
-            for (int i = 0; i < 1000; i++)
+            for (decimal i = 0; i < 1000; i++)
             {
                 contract.IsBetween(i + 1, 0, 2000, "Sua mensagem caso ocorra erro aqui");
             }
@@ -148,16 +149,16 @@ namespace EasyValidator.Tests
         {
             //Arrange
             var contract = new EasyValidatorContract<Sample>();
-            var samples = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            var samples = new List<decimal> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             //Act
             contract.Requires();
-            for (int i = 0; i < 1000; i++)
+            for (decimal i = 0; i < 1000; i++)
             {
                 contract.ContainsInList(i, samples, "Sua mensagem caso ocorra erro aqui");
             }
 
             //Assert
-            Assert.True(contract.Invalid);
+            Assert.False(contract.Valid);
             Assert.Equal(989, contract.Errors.Count);
         }
 
@@ -170,11 +171,11 @@ namespace EasyValidator.Tests
 
             //Act
             contract.Requires();
-            contract.OneOrAnother(1, 0, "Sua mensagem caso ocorra erro aqui");
-            contract.OneOrAnother(0, 1, "Sua mensagem caso ocorra erro aqui");
-            contract.OneOrAnother(1, 0, "Sua mensagem caso ocorra erro aqui");
-            contract.OneOrAnother(1, 10, "Sua mensagem caso ocorra erro aqui");
-            contract.OneOrAnother(0, 1, "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother((decimal)1, (decimal)0, "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother((decimal)0, (decimal)1, "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother((decimal)1, (decimal)0, "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother((decimal)1, (decimal)10, "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother((decimal)0, (decimal)1, "Sua mensagem caso ocorra erro aqui");
 
             //Assert
             Assert.True(contract.Valid);
@@ -190,15 +191,17 @@ namespace EasyValidator.Tests
 
             //Act
             contract.Requires();
-            contract.OneOrAnother(0, 0, "Sua mensagem caso ocorra erro aqui");
-            contract.OneOrAnother(0, 0, "Sua mensagem caso ocorra erro aqui");
-            contract.OneOrAnother(0, 0, "Sua mensagem caso ocorra erro aqui");
-            contract.OneOrAnother(0, 0, "Sua mensagem caso ocorra erro aqui");
-            contract.OneOrAnother(0, 0, "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother((decimal)0, (decimal)0, "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother((decimal)0, (decimal)0, "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother((decimal)0, (decimal)0, "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother((decimal)0, (decimal)0, "Sua mensagem caso ocorra erro aqui");
+            contract.OneOrAnother((decimal)0, (decimal)0, "Sua mensagem caso ocorra erro aqui");
 
             //Assert
-            Assert.True(contract.Invalid);
+            Assert.False(contract.Valid);
             Assert.Equal(5, contract.Errors.Count);
         }
+
+        #endregion
     }
 }

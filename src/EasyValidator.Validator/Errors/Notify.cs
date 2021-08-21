@@ -55,7 +55,7 @@ namespace EasyValidator.Validator.Errors
             return Validations() ?? new List<Error>();
         }
 
-        public bool Invalid => _errors.Any() || GetNotificationsFromValidations().Any();
-        public bool Valid => !Invalid;
+        public bool Valid => !_errors.Any() || GetNotificationsFromValidations().Any();
+
     }
 }

@@ -11,7 +11,7 @@ namespace EasyValidator.Validator.Validations
 
         public EasyValidatorContract<T> Concat(Notify<Error> notify)
         {
-            if (notify.Invalid)
+            if (!notify.Valid)
                 AddErrors(notify.Errors);
 
             return this;

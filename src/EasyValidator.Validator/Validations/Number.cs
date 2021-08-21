@@ -5,9 +5,6 @@ namespace EasyValidator.Validator.Validations
     public partial class EasyValidatorContract<T>
     {
         #region "decimal"
-
-        /* decimal */
-
         
         public EasyValidatorContract<T> IsGreater(decimal val, decimal comparer, string message)
         {
@@ -86,12 +83,19 @@ namespace EasyValidator.Validator.Validations
             return this;
         }
 
+        public EasyValidatorContract<T> OneOrAnother(decimal priorityValue, decimal secundaryValue, string message)
+        {
+            var value = priorityValue + secundaryValue;
+
+            if (value <= 0)
+                AddError(message);
+
+            return this;
+        }
+
         #endregion
 
         #region "double"
-
-        /* decimal */
-
 
         public EasyValidatorContract<T> IsGreater(double val, double comparer, string message)
         {
@@ -141,7 +145,7 @@ namespace EasyValidator.Validator.Validations
             return this;
         }
 
-        public EasyValidatorContract<T> IsBetween(double val, double from, double to, double message)
+        public EasyValidatorContract<T> IsBetween(double val, double from, double to, string message)
         {
             if (!(val > from && val < to))
                 AddError(message);
@@ -170,12 +174,19 @@ namespace EasyValidator.Validator.Validations
             return this;
         }
 
+        public EasyValidatorContract<T> OneOrAnother(double priorityValue, double secundaryValue, string message)
+        {
+            var value = priorityValue + secundaryValue;
+
+            if (value <= 0)
+                AddError(message);
+
+            return this;
+        }
+
         #endregion
 
         #region "int"
-
-        /* decimal */
-
 
         public EasyValidatorContract<T> IsGreater(int val, int comparer, string message)
         {
@@ -249,6 +260,16 @@ namespace EasyValidator.Validator.Validations
             var index = comparer.IndexOf(val);
 
             if (index >= 0)
+                AddError(message);
+
+            return this;
+        }
+
+        public EasyValidatorContract<T> OneOrAnother(int priorityValue, int secundaryValue, string message)
+        {
+            var value = priorityValue + secundaryValue;
+
+            if (value <= 0)
                 AddError(message);
 
             return this;
@@ -333,6 +354,16 @@ namespace EasyValidator.Validator.Validations
             var index = comparer.IndexOf(val);
 
             if (index >= 0)
+                AddError(message);
+
+            return this;
+        }
+
+        public EasyValidatorContract<T> OneOrAnother(float priorityValue, float secundaryValue, string message)
+        {
+            var value = priorityValue + secundaryValue;
+
+            if (value <= 0)
                 AddError(message);
 
             return this;

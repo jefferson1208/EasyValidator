@@ -23,7 +23,7 @@ namespace EasyValidator.Tests
             contract.IsGreater(Sample.DateTimeSnapshot, _entity.DateTimeLowerThanNow, "Sua mensagem caso ocorra erro aqui");
 
             //Assert
-            Assert.True(contract.Invalid);
+            Assert.False(contract.Valid);
             Assert.Equal(2, contract.Errors.Count);
         }
 
